@@ -12,9 +12,9 @@ public class ChromaticNumberTest {
 
 	@Test
 	public void emptyTest() throws FileNotFoundException {
-    	var graph = FileLoader.loadGraphFromJson("src/test/resources/empty.json");
+		var graph = FileLoader.loadGraphFromJson("src/test/resources/empty.json");
 
-    	assertThat(chromaticNumber.run(graph) == 0).isTrue();
+		assertThat(chromaticNumber.run(graph) == 0).isTrue();
 	}
 
 	@Test
@@ -24,10 +24,10 @@ public class ChromaticNumberTest {
 		var graph_k5 = FileLoader.loadGraphFromJson("src/test/resources/fully_connected_undirected_5.json");
 		var graph_k9 = FileLoader.loadGraphFromJson("src/test/resources/fully_connected_undirected_9.json");
 
-    	assertThat(chromaticNumber.run(graph_k3) == 3).isTrue();
-    	assertThat(chromaticNumber.run(graph_k4) == 4).isTrue();
-    	assertThat(chromaticNumber.run(graph_k5) == 5).isTrue();
-    	assertThat(chromaticNumber.run(graph_k9) == 9).isTrue();
+		assertThat(chromaticNumber.run(graph_k3) == 3).isTrue();
+		assertThat(chromaticNumber.run(graph_k4) == 4).isTrue();
+		assertThat(chromaticNumber.run(graph_k5) == 5).isTrue();
+		assertThat(chromaticNumber.run(graph_k9) == 9).isTrue();
 	}
 
 	// @Test
