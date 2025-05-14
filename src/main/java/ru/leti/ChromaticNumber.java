@@ -1,10 +1,3 @@
-/*
- * Problem of finding chromatic number of graph is NP-hard problem, so it has no
- * algorithms which will work equally good for all cases. So was chosen algorithm
- * of ...
- * Sources:
- */
-
 /* Logic grouping of classes (like namespaces in C++) */
 package ru.leti;
 
@@ -79,25 +72,6 @@ public class ChromaticNumber implements GraphCharacteristic {
             vertexColors.put(vId, 0);
         }
 
-        // int startColor = 1;
-        // int maxColor = 1;
-
-        // while (adjMap.size() != 0) {
-        //     for (int vId : adjMap.getSet()) {
-        //         // Optimization to firstly color first vertex in graph
-        //         if (maxColor == startColor) {
-        //             vertexColors.get(vId) = startColor;
-        //             adjMap.remove(vId);
-        //             maxColor++;
-        //             continue;
-        //         }
-
-                
-        //         for (int adjId : adjMap.get(vId)) {
-                    
-        //         }
-        //     }
-        // }
         int maxColor = 0;
 
         for (Integer vId : vertexColors.keySet()) {
@@ -122,10 +96,4 @@ public class ChromaticNumber implements GraphCharacteristic {
 
         return maxColor;
     }
-    
-    // public static void main (String args[]) {
-    //     System.out.println("Hello world from ChromaticNumber!");
-    //     var graph = FileLoader.loadGraphFromJson("src/test/resources/graph-data-1745663537246.json");
-    //     System.out.println(run(graph));
-    // }
 }
