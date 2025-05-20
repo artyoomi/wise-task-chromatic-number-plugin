@@ -18,11 +18,11 @@ public class ChromaticNumberTest {
 	}
 
 	@Test
-	public void fullyConnectedUndirectedTest() throws FileNotFoundException {
-		var graph_k3 = FileLoader.loadGraphFromJson("src/test/resources/fully_connected_undirected_3.json");
-		var graph_k4 = FileLoader.loadGraphFromJson("src/test/resources/fully_connected_undirected_4.json");
-		var graph_k5 = FileLoader.loadGraphFromJson("src/test/resources/fully_connected_undirected_5.json");
-		var graph_k9 = FileLoader.loadGraphFromJson("src/test/resources/fully_connected_undirected_9.json");
+	public void fullyConnectedTest() throws FileNotFoundException {
+		var graph_k3 = FileLoader.loadGraphFromJson("src/test/resources/fully_connected_3.json");
+		var graph_k4 = FileLoader.loadGraphFromJson("src/test/resources/fully_connected_4.json");
+		var graph_k5 = FileLoader.loadGraphFromJson("src/test/resources/fully_connected_5.json");
+		var graph_k9 = FileLoader.loadGraphFromJson("src/test/resources/fully_connected_9.json");
 
 		assertThat(chromaticNumber.run(graph_k3) == 3).isTrue();
 		assertThat(chromaticNumber.run(graph_k4) == 4).isTrue();
@@ -30,9 +30,48 @@ public class ChromaticNumberTest {
 		assertThat(chromaticNumber.run(graph_k9) == 9).isTrue();
 	}
 
-	// @Test
-	// public void fullyConnectedDirectedTest() throws FileNotFoundException {
+	@Test
+	public void singleNodeTest() throws FileNotFoundException {
+		var graph_single = FileLoader.loadGraphFromJson("src/test/resources/single_node.json");
 		
-	// }
+		assertThat(chromaticNumber.run(graph_single) == 1).isTrue();
+	}
+
+	@Test
+	public void bipartiteTest() throws FileNotFoundException {
+		var graph_bp = FileLoader.loadGraphFromJson("src/test/resources/bipartite.json");
+		
+		assertThat(chromaticNumber.run(graph_bp) == 1).isTrue();
+	}
+	
+	@Test
+	public void NotConnectedNodesTest() throws FileNotFoundException {
+		var graph_nc2 = FileLoader.loadGraphFromJson("src/test/resources/not_connected_2.json");
+		var graph_nc5 = FileLoader.loadGraphFromJson("src/test/resources/not_connected_5.json");
+		
+		assertThat(chromaticNumber.run(graph_nc2) == 1).isTrue();
+		assertThat(chromaticNumber.run(graph_nc5) == 1).isTrue();
+	}
+
+	@Test
+	public void CyclesTest() throws FileNotFoundException {
+		var graph_c1 = FileLoader.loadGraphFromJson("src/test/resources/cycle_even_length.json");
+		var graph_c2 = FileLoader.loadGraphFromJson("src/test/resources/cycle_odd_length.json");
+		
+		assertThat(chromaticNumber.run(graph_c1) == 2).isTrue();
+		assertThat(chromaticNumber.run(graph_c2) == 3).isTrue();
+	}
+
+	@Test
+	public void TreeTest() throws FileNotFoundException {
+		var graph_tree1 = FileLoader.loadGraphFromJson("src/test/resources/tree_1.json");
+		var graph_tree2 = FileLoader.loadGraphFromJson("src/test/resources/tree_2.json");
+		var graph_star  = FileLoader.loadGraphFromJson("src/test/resources/star.json");
+		
+		assertThat(chromaticNumber.run(graph_tree1) == 2).isTrue();
+	  assertThat(chromaticNumber.run(graph_tree2) == 2).isTrue();
+		assertThat(chromaticNumber.run(graph_star)  == 2).isTrue();
+	}
+	
 }
 
