@@ -19,15 +19,13 @@ import java.util.Comparator;
 
 public class ChromaticNumber implements GraphCharacteristic {
     
-    private TreeMap<Integer, List<Integer>> buildAdjacencyTreeMap(Graph graph) {
+    private HashMap<Integer, List<Integer>> buildAdjacencyMap(Graph graph) {
         // 1. Get vertices and edges list
         List<Vertex> vertices = graph.getVertexList();
         List<Edge>   edges = graph.getEdgeList();
 
-        // 2. Create empty red-black tree for adjacancy list
-        TreeMap<Integer, List<Integer>> adjMap = new TreeMap<>(
-            Comparator.reverseOrder()
-        );
+        // 2. Create empty map for adjacency list
+        HashMap<Integer, List<Integer>> adjMap = new HashMap<>();
 
         // 3. Fill keys and create empty vertices lists for each key
         for (Vertex v : vertices) {
@@ -41,9 +39,11 @@ public class ChromaticNumber implements GraphCharacteristic {
 
             adjMap.get(source).add(target);
 
-            if (graph.isDirect() == false) {
-                adjMap.get(target).add(source);
-            }
+            /* The chromatic number does not depend on the direction of
+               the edges, so for the convenience of the program, we add
+               the opposite number for any edge. That is, we consider
+               each graph to be undirected. */
+            adjMap.get(target).add(source);
         }
 
         return adjMap;
@@ -55,26 +55,27 @@ public class ChromaticNumber implements GraphCharacteristic {
     */
     @Override
     public int run(Graph graph) {
-        /*
-         * Get map with following structure:
-         * key: vertex id
-         * value: list of adjacency vertices id's
-         */
-        TreeMap<Integer, List<Integer>> adjMap = buildAdjacencyTreeMap(graph);
+         // Hashmap to store adjacency list of graph
+        HashMap<Integer, List<Integer>> adjMap = buildAdjacencyMap(graph);
 
-        /* 
-         * Fill map with following structure:
-         * key: vertex id
-         * value: vertex color id
-         */
+        // Sort vertices by neighbors count (non-ascending order)
+        List<Integer> sortedVertices = new ArrayList<>(adjMap.keySet());
+        sortedVertices.sort((v1, v2) -> {
+            int size1 = adjMap.get(v1).size();
+            int size2 = adjMap.get(v2).size();
+            return Integer.compare(size2, size1);
+        });
+
+        // Hashmap to store color for each vertex
         HashMap<Integer, Integer> vertexColors = new HashMap<>();
-        for (int vId : adjMap.keySet()) {
+        for (Integer vId : sortedVertices) {
             vertexColors.put(vId, 0);
         }
 
         int maxColor = 0;
 
-        for (Integer vId : vertexColors.keySet()) {
+        for (Integer vId : sortedVertices) {
+            // Get colors, used by neighbors
             Set<Integer> usedColors = new HashSet<>();
             for (Integer neighborId : adjMap.get(vId)) {
                 Integer color = vertexColors.get(neighborId);
@@ -83,11 +84,13 @@ public class ChromaticNumber implements GraphCharacteristic {
                 }
             }
 
+            // Finding the minimum acceptable color
             int color = 1;
             while (usedColors.contains(color)) {
                 color++;
             }
 
+            // Add found color in vertex colors map
             vertexColors.put(vId, color);
             if (color > maxColor) {
                 maxColor = color;

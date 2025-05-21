@@ -31,7 +31,7 @@ public class ChromaticNumberTest {
 	}
 
 	@Test
-	public void singleNodeTest() throws FileNotFoundException {
+	public void unlinkedNodesTest() throws FileNotFoundException {
 		var graph_single = FileLoader.loadGraphFromJson("src/test/resources/single_node.json");
 		
 		assertThat(chromaticNumber.run(graph_single) == 1).isTrue();
@@ -41,11 +41,11 @@ public class ChromaticNumberTest {
 	public void bipartiteTest() throws FileNotFoundException {
 		var graph_bp = FileLoader.loadGraphFromJson("src/test/resources/bipartite.json");
 		
-		assertThat(chromaticNumber.run(graph_bp) == 1).isTrue();
+		assertThat(chromaticNumber.run(graph_bp) == 2).isTrue();
 	}
 	
 	@Test
-	public void NotConnectedNodesTest() throws FileNotFoundException {
+	public void notConnectedNodesTest() throws FileNotFoundException {
 		var graph_nc2 = FileLoader.loadGraphFromJson("src/test/resources/not_connected_2.json");
 		var graph_nc5 = FileLoader.loadGraphFromJson("src/test/resources/not_connected_5.json");
 		
@@ -54,24 +54,30 @@ public class ChromaticNumberTest {
 	}
 
 	@Test
-	public void CyclesTest() throws FileNotFoundException {
+	public void cyclesTest() throws FileNotFoundException {
 		var graph_c1 = FileLoader.loadGraphFromJson("src/test/resources/cycle_even_length.json");
 		var graph_c2 = FileLoader.loadGraphFromJson("src/test/resources/cycle_odd_length.json");
+		var graph_c3_c5_bridged = FileLoader.loadGraphFromJson("src/test/resources/cycle_two_odd_bridged.json");
 		
 		assertThat(chromaticNumber.run(graph_c1) == 2).isTrue();
 		assertThat(chromaticNumber.run(graph_c2) == 3).isTrue();
+		assertThat(chromaticNumber.run(graph_c3_c5_bridged) == 3).isTrue();
+		
 	}
 
 	@Test
-	public void TreeTest() throws FileNotFoundException {
-		var graph_tree1 = FileLoader.loadGraphFromJson("src/test/resources/tree_1.json");
-		var graph_tree2 = FileLoader.loadGraphFromJson("src/test/resources/tree_2.json");
+	public void treeTest() throws FileNotFoundException {
+		var graph_tree = FileLoader.loadGraphFromJson("src/test/resources/tree.json");
 		var graph_star  = FileLoader.loadGraphFromJson("src/test/resources/star.json");
-		
-		assertThat(chromaticNumber.run(graph_tree1) == 2).isTrue();
-	  assertThat(chromaticNumber.run(graph_tree2) == 2).isTrue();
+
+		assertThat(chromaticNumber.run(graph_tree) == 2).isTrue();
 		assertThat(chromaticNumber.run(graph_star)  == 2).isTrue();
 	}
-	
+
+	@Test
+	public void petersenTest() throws FileNotFoundException {
+		var graph = FileLoader.loadGraphFromJson("src/test/resources/petersen.json");
+		assertThat(chromaticNumber.run(graph) == 3).isTrue();
+	}
 }
 
