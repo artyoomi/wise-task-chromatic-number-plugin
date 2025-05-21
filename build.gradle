@@ -12,7 +12,7 @@ repositories {
         url = uri("https://maven.pkg.github.com/Terross/wise-task-library")
         credentials {
             username = "dima38091@gmail.com"
-            password = "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"
+            password = "some_token"
         }
     }
 }
