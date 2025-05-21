@@ -8,6 +8,9 @@ on:
 
 jobs:
   build:
+    env:
+      OWNER_USERNAME: ${{ secrets.OWNER_USERNAME }}
+      OWNER_TOKEN: ${{ secrets.OWNER_TOKEN }}
     runs-on: ubuntu-latest
 
     steps:
