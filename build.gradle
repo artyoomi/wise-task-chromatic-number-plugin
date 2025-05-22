@@ -11,8 +11,8 @@ repositories {
     maven {
         url = uri("https://maven.pkg.github.com/Terross/wise-task-library")
         credentials {
-            username = project.findProperty("OWNER_USERNAME") ?: System.getenv("ORG_GRADLE_PROJECT_OWNER_USERNAME")
-            password = project.findProperty("OWNER_TOKEN") ?: System.getenv("ORG_GRADLE_PROJECT_OWNER_TOKEN")
+            username = OWNER_USERNAME
+            password = OWNER_TOKEN
         }
     }
 }
