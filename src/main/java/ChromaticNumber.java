@@ -1,6 +1,3 @@
-/* Logic grouping of classes (like namespaces in C++) */
-package ru.leti;
-
 // Import current project modules
 import ru.leti.wise.task.graph.model.Graph;
 import ru.leti.wise.task.graph.model.Vertex;
